@@ -26,17 +26,15 @@ webix.ui({
                     autoheight:true,
                     scroll:false,
                     border:false,
-                    css:"listBackgr .webix_list_item",
+                    css:"listBackgr",
                     data:[ "Dashboard", "Users", "Products", "Location" ]
                 },
                 {},
                 { 
-                    view:"button", 
-                    id:"connect", 
-                    type:"icon", 
-                    icon:"wxi-check", 
-                    label:"Connected", 
-                    css:"greenbutton greentext" 
+                    view:"label", 
+                    id:"connect",
+                    label: "<i class='webix_icon wxi wxi-check greentext'></i>Connected",
+                    align:"center"
                 }
             ]},
             { view:"resizer" },
@@ -44,8 +42,7 @@ webix.ui({
                 view:"datatable",
                 id:"film_list",
                 data:small_film_set,
-                autoConfig:true,
-                adjust:"data"
+                autoConfig:true
             },
             {
                 view:"form",
@@ -78,14 +75,10 @@ webix.ui({
 ]});
 
 function addFilm(){
-    var film_item = $$("film_form").getValues();
+    const film_item = $$("film_form").getValues();
     $$("film_list").add(film_item);
   }
 
 function clearForm(){
     $$("film_form").clear();
   }
-
-
-
-
