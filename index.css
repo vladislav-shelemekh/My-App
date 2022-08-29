@@ -3,19 +3,14 @@
     text-align: center;
 }
 
-.listBackgr  {
+.listBackgr {
     background-color: gainsboro;
 }
 
-.webix_list_item {
+.listBackgr .webix_list_item {
     border:none;
 }
-.greenbutton .webix_icon_btn.wxi-check {
+
+.greentext {
     color: green;
 }
-
-.greentext .webix_button {
-    color: green;
-}
-
-
