@@ -42,7 +42,6 @@ webix.ui({
             { view:"resizer" },
             {
                 view:"datatable",
-                container:"test",
                 id:"film_list",
                 data:small_film_set,
                 autoConfig:true,
