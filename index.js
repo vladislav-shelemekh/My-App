@@ -33,8 +33,9 @@ webix.ui({
                 { 
                     view:"label", 
                     id:"connect",
-                    label: "<i class='webix_icon wxi wxi-check greentext'></i>Connected",
-                    align:"center"
+                    label: "<i class='webix_icon wxi wxi-check'></i>Connected",
+                    align:"center",
+                    css:"greentext"
                 }
             ]},
             { view:"resizer" },
