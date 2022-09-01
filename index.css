@@ -11,6 +11,6 @@
     border:none;
 }
 
-.greentext {
+.greentext .webix_el_box {
     color: green;
 }
