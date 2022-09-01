@@ -1,0 +1,16 @@
+
+.footer {
+    text-align: center;
+}
+
+.listBackgr {
+    background-color: gainsboro;
+}
+
+.listBackgr .webix_list_item {
+    border:none;
+}
+
+.greentext .webix_el_box {
+    color: green;
+}
