@@ -74,14 +74,6 @@ webix.ui({
                     rating:function(value){
                         return webix.rules.isNotEmpty && value!=0;
                         }
-                },
-                on:{
-                    // onValidationError:function(key, data){
-                    //   webix.message({text:key+" field is incorrect", type:"error"});
-                    // },
-                    // onValidationSuccess:function(){
-                    //     webix.message("The validation is successful");
-                    // },
                 }
                 
             }    
@@ -105,13 +97,7 @@ webix.ui({
       scroll:false,
       data:[ "Settings", "Log Out" ]
     }
-  });
-
-// function addFilm(){
-//     const film_item = $$("film_form").getValues();
-//     $$("film_list").add(film_item);
-//     $$("film_form").validate();
-// }
+});
 
 function addFilm(){
     const film_item = $$("film_form").getValues();
@@ -124,10 +110,11 @@ function addFilm(){
 
 function clearForm(){
     webix.confirm({
-        title:"Form is incomplete",
-        text:"Do you still want to continue?"});
-    $$("film_form").clear();
-
+        title:"Form will be cleared",
+        text:"Do you still want to continue?"}).then(function() {
+            $$("film_form").clear();
+            $$("film_form").clearValidation();
+        });
 }
 
 
