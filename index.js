@@ -13,7 +13,8 @@ webix.ui({
                 type:"icon", 
                 icon:"wxi-user", 
                 autowidth:true, 
-                css:"webix_transparent" 
+                css:"webix_transparent",
+                popup:"my_popup"
             }
             ]  
         },
@@ -52,16 +53,37 @@ webix.ui({
                 paddingX:30,
                 elements:[
                     { template:"Edit Films", type:"section" },
-                    { view:"text", name:"title", id:"inp_title", label:"Title" },
-                    { view:"text", name:"year", id:"inp_year", label:"Year" },
-                    { view:"text", name:"rating", id:"inp_rating", label:"Rating" },
-                    { view:"text", name:"votes", id:"inp_votes", label:"Votes" },
+                    { view:"text", name:"title", id:"inp_title", label:"Title", invalidMessage:"Enter a tittle" },
+                    { view:"text", name:"year", id:"inp_year", label:"Year", invalidMessage:"Enter a year between 1970 and 2022" },
+                    { view:"text", name:"rating", id:"inp_rating", label:"Rating", invalidMessage:'Enter a rating more than "0"' },
+                    { view:"text", name:"votes", id:"inp_votes", label:"Votes", invalidMessage:"Enter votes less than 100000" },
                     { margin:10, cols:[
                         { view:"button", id:"addButton", value:"Add new", css:"webix_primary", click:addFilm },
                         { view:"button", id:"clrButton", value:"Clear", click:clearForm }
                     ]},
                     {}     
-                ]
+                ],
+                rules: {
+                    title:webix.rules.isNotEmpty,
+                    year:function(value){
+                        return value>1970 && value <=2022;
+                        },
+                    votes:function(value){
+                        return value<100000;
+                        },
+                    rating:function(value){
+                        return webix.rules.isNotEmpty && value!=0;
+                        }
+                },
+                on:{
+                    // onValidationError:function(key, data){
+                    //   webix.message({text:key+" field is incorrect", type:"error"});
+                    // },
+                    // onValidationSuccess:function(){
+                    //     webix.message("The validation is successful");
+                    // },
+                }
+                
             }    
         ]
     },
@@ -75,11 +97,37 @@ webix.ui({
         
 ]});
 
+webix.ui({
+    view:"popup", id:"my_popup",
+    body:{
+      view:"list",
+      autoheight:true,
+      scroll:false,
+      data:[ "Settings", "Log Out" ]
+    }
+  });
+
+// function addFilm(){
+//     const film_item = $$("film_form").getValues();
+//     $$("film_list").add(film_item);
+//     $$("film_form").validate();
+// }
+
 function addFilm(){
     const film_item = $$("film_form").getValues();
-    $$("film_list").add(film_item);
-  }
+    if ($$("film_form").validate()) {
+        $$("film_list").add(film_item);
+        webix.message("The validation is successful");
+    }
+
+}
 
 function clearForm(){
+    webix.confirm({
+        title:"Form is incomplete",
+        text:"Do you still want to continue?"});
     $$("film_form").clear();
-  }
+
+}
+
+
