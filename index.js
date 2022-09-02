@@ -144,8 +144,8 @@ webix.ui({
 const form = $$("film_form");
 
 function addFilm() {
-  const film_item = $$(form).getValues();
-  if ($$(form).validate()) {
+  const film_item = form.getValues();
+  if (form.validate()) {
     $$("film_list").add(film_item);
     webix.message("The validation is successful");
   }
@@ -158,7 +158,7 @@ function clearForm() {
       text: "Do you still want to continue?",
     })
     .then(function () {
-      $$(form).clear();
-      $$(form).clearValidation();
+      form.clear();
+      form.clearValidation();
     });
 }
