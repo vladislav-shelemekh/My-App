@@ -30,8 +30,14 @@ webix.ui({
               autoheight: true,
               scroll: false,
               border: false,
+              select:true,
+              on:{
+                onAfterSelect:function(id){ 
+                  $$(id).show();
+              }},
+              
               css: "listBackgr",
-              data: ["Dashboard", "Users", "Products", "Location"],
+              data: ["Dashboard", "Users", "Products", "Admin"],
             },
             {},
             {
@@ -44,80 +50,167 @@ webix.ui({
           ],
         },
         { view: "resizer" },
-        {
-          view: "datatable",
-          id: "film_list",
-          data: small_film_set,
-          autoConfig: true,
-        },
-        {
-          view: "form",
-          id: "film_form",
-          gravity: 0.3,
-          paddingX: 30,
-          elements: [
-            { template: "Edit Films", type: "section" },
-            {
-              view: "text",
-              name: "title",
-              id: "inp_title",
-              label: "Title",
-              invalidMessage: "Enter a tittle",
-            },
-            {
-              view: "text",
-              name: "year",
-              id: "inp_year",
-              label: "Year",
-              invalidMessage: "Enter a year between 1970 and 2022",
-            },
-            {
-              view: "text",
-              name: "rating",
-              id: "inp_rating",
-              label: "Rating",
-              invalidMessage: 'Enter a rating more than "0"',
-            },
-            {
-              view: "text",
-              name: "votes",
-              id: "inp_votes",
-              label: "Votes",
-              invalidMessage: "Enter votes less than 100000",
-            },
-            {
-              margin: 10,
-              cols: [
+        { cells:[ 
+            { id:"Dashboard", cols:[
+                {
+                    view: "datatable",
+                    id: "film_list",
+                    //data: small_film_set,
+                    //autoConfig: true,
+                    url:"data.js",
+                    select:true,
+                    hover:"myhover",
+                    columns: [
+                      { id:"rank", header:"", adjust:true },
+                      { id:"title", header:[ "Film title", { content:"textFilter"} ], sort:"string", adjust:true},
+                      { id:"year", header:[ "Released", { content:"textFilter"} ], adjust:true },
+                      { id:"votes", header:[ "Votes", { content:"textFilter"} ], adjust:true },
+                      { id:"del", header:"", template:"{common.trashIcon()}"}
+                    ],
+                    onClick: {
+                        "wxi-trash":function(e, id){
+                          this.remove(id);
+                            return false;
+                        }
+                    },
+                    on:{
+                        onAfterSelect:valuesToForm
+                      },
+                    // onclick: {
+                    //     "wxi-trash":function(e, id){
+                    //       this.remove(id);
+                    //         return false;
+                    //     }
+                    // }
+                },
+                {
+                    view: "form",
+                    id: "film_form",
+                    gravity: 0.3,
+                    paddingX: 30,
+                    elements: [
+                      { template: "Edit Films", type: "section" },
+                      {
+                        view: "text",
+                        name: "title",
+                        id: "inp_title",
+                        label: "Title",
+                        invalidMessage: "Enter a tittle",
+                      },
+                      {
+                        view: "text",
+                        name: "year",
+                        id: "inp_year",
+                        label: "Year",
+                        invalidMessage: "Enter a year between 1970 and 2022",
+                      },
+                      {
+                        view: "text",
+                        name: "rating",
+                        id: "inp_rating",
+                        label: "Rating",
+                        invalidMessage: 'Enter a rating more than "0"',
+                      },
+                      {
+                        view: "text",
+                        name: "votes",
+                        id: "inp_votes",
+                        label: "Votes",
+                        invalidMessage: "Enter votes less than 100000",
+                      },
+                      {
+                        margin: 10,
+                        cols: [
+                          {
+                            view: "button",
+                            id: "addButton",
+                            value: "Add new",
+                            css: "webix_primary",
+                            click: addFilm
+                          },
+                          {
+                            view: "button",
+                            id: "clrButton",
+                            value: "Clear",
+                            click: clearForm
+                          },
+                        ],
+                      },
+                      {},
+                    ],
+                    rules: {
+                      title: webix.rules.isNotEmpty,
+                      year: function (value) {
+                        return value > 1970 && value <= new Date().getFullYear();
+                      },
+                      votes: function (value) {
+                        return value < 100000;
+                      },
+                      rating: function (value) {
+                        return webix.rules.isNotEmpty && value != 0;
+                      },
+                    },
+                  }
+            ]},
+            { id:"Users", rows: [
+              { view:"toolbar",
+                cols: [
+                {view:"text", id:"list_input"},
                 {
                   view: "button",
-                  id: "addButton",
-                  value: "Add new",
+                  id: "asc",
+                  value: "Sort asc",
                   css: "webix_primary",
-                  click: addFilm,
+                  autowidth:true,
+                  click: ascSort
                 },
                 {
                   view: "button",
-                  id: "clrButton",
-                  value: "Clear",
-                  click: clearForm,
+                  id: "desc",
+                  value: "Sort desc",
+                  autowidth:true,
+                  css: "webix_primary",
+                  click: descSort
+                }
+              ]},
+              { view: "list",
+                id:"userList",
+                url:"users.js",
+                select:true,
+                template:"#name# from #country# <i class='webix_icon wxi wxi-close close'></i>",
+                onClick: {
+                  "wxi-close":function(e, id){
+                    this.remove(id);
+                      return false;}
                 },
-              ],
-            },
-            {},
-          ],
-          rules: {
-            title: webix.rules.isNotEmpty,
-            year: function (value) {
-              return value > 1970 && value <= new Date().getFullYear();
-            },
-            votes: function (value) {
-              return value < 100000;
-            },
-            rating: function (value) {
-              return webix.rules.isNotEmpty && value != 0;
-            },
-          },
-        },
+                on: {
+                  onAfterLoad: highlter
+                }    
+              },
+              {view:"chart",
+              type:"bar",
+              value:"#age#",
+              label:"#age#",
+              barWidth:35,
+              radius:0,
+              gradient:"falling",
+              url:"users.js"
+            }
+            ]},
+            { id:"Products", rows: [
+              { view: "treetable",
+                cols: [
+                  { id:"id",	header:""},
+                  { id:"title",	header:"Title", template:"{common.treetable()} #title#" },
+                  { id:"price",	header:"Price"	}
+              ], 
+              select:true,
+              url: "products.js",
+              }
+            ]},
+            { id:"Admin", template:"Admin"}
+        ]},
+       
       ],
     },
 
@@ -145,9 +238,13 @@ const form = $$("film_form");
 
 function addFilm() {
   const film_item = form.getValues();
-  if (form.validate()) {
-    $$("film_list").add(film_item);
-    webix.message("The validation is successful");
+  if (film_item.id) {
+    $$("film_list").updateItem(film_item.id, film_item);
+  } else {
+    if (form.validate()) {
+        $$("film_list").add(film_item);
+        webix.message("The validation is successful");
+      }
   }
 }
 
@@ -160,5 +257,38 @@ function clearForm() {
     .then(function () {
       form.clear();
       form.clearValidation();
+      $$("film_list").unselectAll();
     });
+}
+
+function valuesToForm(id){
+    var values = $$("film_list").getItem(id);
+    form.setValues(values);
+}
+
+$$("list_input").attachEvent("onTimedKeyPress",function(){
+  const value = this.getValue().toLowerCase();
+  $$("userList").filter(function(obj){
+    return obj.name.toLowerCase().indexOf(value) !== -1;
+  });
+});
+
+function ascSort(){
+  $$("userList").sort("#name#","asc","string");
+}
+
+function descSort(){
+  $$("userList").sort("#name#","desc","string");
+    
+};
+
+
+function highlter() {
+  $$("userList").data.each(function(item) {
+    if (item.id < 6) {
+      $$("userList").addCss(item.id, "back");
+      console.log(item);
+      // item.addRowCss(item.id, "back");
+    }
+  }); 
 }

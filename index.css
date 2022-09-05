@@ -14,3 +14,14 @@
 .greentext .webix_el_box {
     color: green;
 }
+
+.myhover.webix_cell{
+    background: gainsboro;
+}
+.close {
+    float: right;
+}
+
+.back .webix_list_item {
+    background-color: brown;
+}
