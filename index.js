@@ -76,12 +76,7 @@ webix.ui({
                     on:{
                         onAfterSelect:valuesToForm
                       },
-                    // onclick: {
-                    //     "wxi-trash":function(e, id){
-                    //       this.remove(id);
-                    //         return false;
-                    //     }
-                    // }
+                   
                 },
                 {
                     view: "form",
