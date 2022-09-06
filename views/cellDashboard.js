@@ -130,13 +130,8 @@ const filmForm = {
   },
 };
 
-// function select(id) {
-//   var values = $$(id.film_list).getItem(id);
-//   $$(id.film_form).setValues(values);
-// }
-
 function valuesToForm(film){
-    var values = $$(id.film_list).getItem(film);
+    const values = $$(id.film_list).getItem(film);
     $$(id.film_form).setValues(values);
 }
 

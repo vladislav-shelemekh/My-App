@@ -1,7 +1,7 @@
-import popup from "../pop-up.js";
-import { userSearch, userList, userChart} from "../cellUsers.js";
-import products from "../cellProducts.js";
-import { filmTable, filmForm} from "../cellDashboard.js";
+import popup from "./views/pop-up.js";
+import { userSearch, userList, userChart} from "./views/cellUsers.js";
+import products from "./views/cellProducts.js";
+import { filmTable, filmForm} from "./views/cellDashboard.js";
 
 const main = {
   rows: [
