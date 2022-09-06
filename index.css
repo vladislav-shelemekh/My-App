@@ -22,6 +22,6 @@
     float: right;
 }
 
-.back .webix_list_item {
-    background-color: brown;
+.webix_list_item.back {
+    background-color: gainsboro;
 }
