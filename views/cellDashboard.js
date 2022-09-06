@@ -6,7 +6,7 @@ const id = {
 const filmTable = {
   view: "datatable",
   id: id.film_list,
-  url: "data.js",
+  url: "./data/data.js",
   select: true,
   hover: "myhover",
   columns: [

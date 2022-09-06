@@ -25,7 +25,7 @@ const userSearch = {
 const userList = {
   view: "list",
   id: "userList",
-  url: "users.js",
+  url: "./data/users.js",
   select: true,
   template:
     "#name# from #country# <i class='webix_icon wxi wxi-close close'></i>",
@@ -48,7 +48,7 @@ const userChart = {
   barWidth: 35,
   radius: 0,
   gradient: "falling",
-  url: "users.js",
+  url: "./data/users.js",
 };
 
 function ascSort() {

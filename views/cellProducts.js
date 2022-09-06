@@ -11,7 +11,7 @@ const products = {
     { id: "price", header: "Price", width: 200 },
   ],
   select: true,
-  url: "products.js",
+  url: "./data/products.js",
 };
 
 export default products;
