@@ -66,15 +66,15 @@ const userChart = {
   },
 };
 
-function ascSort() {
+function sortAsc() {
   $$(idStorage.userList).sort("#name#", "asc", "string");
 }
 
-function descSort() {
+function sortDesc() {
   $$(idStorage.userList).sort("#name#", "desc", "string");
 }
 
-function highlter() {
+function highlitItem() {
   $$(idStorage.userList).data.each(function (item) {
     if (item.id < 6) {
       $$(idStorage.userList).addCss(item.id, "back select");

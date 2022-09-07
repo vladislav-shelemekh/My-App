@@ -43,12 +43,14 @@ const filmForm = {
               const films = $$(idStorage.filmTable);
               const form = $$(idStorage.filmForm);
               const filmItem = form.getValues();
-              if (filmItem.id && form.validate()) {
-                films.updateItem(filmItem.id, filmItem);
-                form.clear();
-                webix.message("The validation is successful");
-              } else if (!filmItem.id && form.validate()) {
-                films.add(filmItem);
+
+              if (form.validate()) {
+                if (filmItem.id) {
+                  films.updateItem(filmItem.id, filmItem);
+                } else {
+                  films.add(filmItem);
+                }
+
                 form.clear();
                 webix.message("The validation is successful");
               }

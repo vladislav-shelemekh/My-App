@@ -17,7 +17,7 @@ const products = {
   url: "./data/products.js",
   on: {
     onAfterLoad: function () {
-      $$(idStorage.productsTree).openAll();
+      this.openAll();
     },
   },
 };

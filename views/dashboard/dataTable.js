@@ -30,7 +30,7 @@ const filmTable = {
   },
   on: {
     onAfterSelect: function (film) {
-      const values = $$(idStorage.filmTable).getItem(film);
+      const values = this.getItem(film);
       $$(idStorage.filmForm).setValues(values);
     },
   },
