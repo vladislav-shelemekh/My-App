@@ -1,7 +1,9 @@
 import popup from "./views/pop-up.js";
-import { userSearch, userList, userChart} from "./views/cellUsers.js";
+import { userSearch, userList, userChart } from "./views/cellUsers.js";
 import products from "./views/cellProducts.js";
-import { filmTable, filmForm} from "./views/cellDashboard.js";
+import filmTable from "./views/cellDashboardDataTable.js";
+import filmForm from "./views/cellDashboardForm.js";
+import idStorage from "./views/idStorage.js";
 
 const main = {
   rows: [
@@ -30,7 +32,6 @@ const main = {
           rows: [
             {
               view: "list",
-              id: "mylist",
               width: 200,
               autoheight: true,
               scroll: false,
@@ -43,12 +44,16 @@ const main = {
               },
 
               css: "listBackgr",
-              data: ["Dashboard", "Users", "Products", "Admin"],
+              data: [
+                idStorage.dashboard,
+                idStorage.users,
+                idStorage.products,
+                idStorage.admin,
+              ],
             },
             {},
             {
               view: "label",
-              id: "connect",
               label: "<i class='webix_icon wxi wxi-check'></i>Connected",
               align: "center",
               css: "greentext",
@@ -58,10 +63,10 @@ const main = {
         { view: "resizer" },
         {
           cells: [
-            { id: "Dashboard", cols: [filmTable, filmForm] },
-            { id: "Users", rows: [userSearch, userList, userChart] },
-            { id: "Products", rows: [products] },
-            { id: "Admin", template: "Admin" },
+            { id: idStorage.dashboard, cols: [filmTable, filmForm] },
+            { id: idStorage.users, rows: [userSearch, userList, userChart] },
+            { id: idStorage.products, rows: [products] },
+            { id: idStorage.admin, template: "Admin" },
           ],
         },
       ],
@@ -77,10 +82,4 @@ const main = {
 };
 
 webix.ui(main);
-
-$$("list_input").attachEvent("onTimedKeyPress",function(){
-  const value = this.getValue().toLowerCase();
-  $$("userList").filter(function(obj){
-    return obj.name.toLowerCase().indexOf(value) !== -1;
-  });
-});
+webix.ui(popup);

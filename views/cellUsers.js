@@ -1,8 +1,20 @@
+import idStorage from "./idStorage.js";
 
 const userSearch = {
   view: "toolbar",
   cols: [
-    { view: "text", id: "list_input" },
+    {
+      view: "text",
+      id: "list_input",
+      on: {
+        onTimedKeyPress: function () {
+          const value = this.getValue().toLowerCase();
+          $$(idStorage.userList).filter(function (obj) {
+            return obj.name.toLowerCase().indexOf(value) !== -1;
+          });
+        },
+      },
+    },
     {
       view: "button",
       id: "asc",
@@ -24,7 +36,7 @@ const userSearch = {
 
 const userList = {
   view: "list",
-  id: "userList",
+  id: idStorage.userList,
   url: "./data/users.js",
   select: true,
   template:
@@ -44,27 +56,32 @@ const userChart = {
   view: "chart",
   type: "bar",
   value: "#age#",
-  label: "#age#",
   barWidth: 35,
   radius: 0,
   gradient: "falling",
   url: "./data/users.js",
+  xAxis: "#age#",
+  yAxis: {
+    start: 0,
+    step: 10,
+    end: 70,
+  },
 };
 
 function ascSort() {
-  $$("userList").sort("#name#", "asc", "string");
+  $$(idStorage.userList).sort("#name#", "asc", "string");
 }
 
 function descSort() {
-  $$("userList").sort("#name#", "desc", "string");
+  $$(idStorage.userList).sort("#name#", "desc", "string");
 }
 
 function highlter() {
-  $$("userList").data.each(function (item) {
+  $$(idStorage.userList).data.each(function (item) {
     if (item.id < 6) {
-      $$("userList").addCss(item.id, "back");
+      $$(idStorage.userList).addCss(item.id, "back select");
     }
   });
 }
 
-export { userSearch, userList, userChart};
+export { userSearch, userList, userChart };

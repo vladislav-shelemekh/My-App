@@ -1,4 +1,4 @@
-const popup = webix.ui({
+const popup = {
   view: "popup",
   id: "my_popup",
   body: {
@@ -7,6 +7,6 @@ const popup = webix.ui({
     scroll: false,
     data: ["Settings", "Log Out"],
   },
-});
+};
 
 export default popup;
