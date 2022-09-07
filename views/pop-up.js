@@ -1,6 +1,8 @@
+import idStorage from "./idStorage.js";
+
 const popup = {
   view: "popup",
-  id: "my_popup",
+  id: idStorage.popup,
   body: {
     view: "list",
     autoheight: true,

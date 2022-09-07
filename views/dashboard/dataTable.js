@@ -1,4 +1,4 @@
-import idStorage from "./idStorage.js";
+import idStorage from "../idStorage.js";
 
 const filmTable = {
   view: "datatable",

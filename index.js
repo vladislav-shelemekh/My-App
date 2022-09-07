@@ -1,8 +1,8 @@
 import popup from "./views/pop-up.js";
-import { userSearch, userList, userChart } from "./views/cellUsers.js";
-import products from "./views/cellProducts.js";
-import filmTable from "./views/cellDashboardDataTable.js";
-import filmForm from "./views/cellDashboardForm.js";
+import { userSearch, userList, userChart } from "./views/users/users.js";
+import products from "./views/products/products.js";
+import filmTable from "./views/dashboard/dataTable.js";
+import filmForm from "./views/dashboard/form.js";
 import idStorage from "./views/idStorage.js";
 
 const main = {
@@ -21,7 +21,7 @@ const main = {
           icon: "wxi-user",
           autowidth: true,
           css: "webix_transparent",
-          popup: "my_popup",
+          popup: idStorage.popup,
         },
       ],
     },

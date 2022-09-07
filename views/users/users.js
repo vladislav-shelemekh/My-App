@@ -1,11 +1,11 @@
-import idStorage from "./idStorage.js";
+import idStorage from "../idStorage.js";
 
 const userSearch = {
   view: "toolbar",
   cols: [
     {
       view: "text",
-      id: "list_input",
+      id: idStorage.userFilter,
       on: {
         onTimedKeyPress: function () {
           const value = this.getValue().toLowerCase();
@@ -17,7 +17,6 @@ const userSearch = {
     },
     {
       view: "button",
-      id: "asc",
       value: "Sort asc",
       css: "webix_primary",
       autowidth: true,
@@ -25,7 +24,6 @@ const userSearch = {
     },
     {
       view: "button",
-      id: "desc",
       value: "Sort desc",
       autowidth: true,
       css: "webix_primary",

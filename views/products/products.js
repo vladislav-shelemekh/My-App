@@ -1,6 +1,8 @@
+import idStorage from "../idStorage.js";
+
 const products = {
   view: "treetable",
-  id: "tree",
+  id: idStorage.productsTree,
   columns: [
     { id: "id", header: "", width: 50 },
     {
@@ -15,7 +17,7 @@ const products = {
   url: "./data/products.js",
   on: {
     onAfterLoad: function () {
-      $$("tree").openAll();
+      $$(idStorage.productsTree).openAll();
     },
   },
 };

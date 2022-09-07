@@ -1,4 +1,4 @@
-import idStorage from "./idStorage.js";
+import idStorage from "../idStorage.js";
 
 const filmForm = {
   view: "form",
@@ -57,7 +57,6 @@ const filmForm = {
         },
         {
           view: "button",
-          id: "clrButton",
           value: "Clear",
           on: {
             onItemClick: function clearForm() {
