@@ -1,4 +1,3 @@
-
 .footer {
     text-align: center;
 }
@@ -8,9 +7,25 @@
 }
 
 .listBackgr .webix_list_item {
-    border:none;
+    border: none;
 }
 
 .greentext .webix_el_box {
     color: green;
+}
+
+.myhover.webix_cell {
+    background: gainsboro;
+}
+
+.close {
+    float: right;
+}
+
+.webix_list_item.back {
+    background-color: gainsboro;
+}
+
+.webix_list_item.select.webix_selected {
+    background-color: lightblue;
 }

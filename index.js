@@ -1,4 +1,11 @@
-webix.ui({
+import popup from "./views/pop-up.js";
+import { userSearch, userList, userChart } from "./views/users/users.js";
+import products from "./views/products/products.js";
+import filmTable from "./views/dashboard/dataTable.js";
+import filmForm from "./views/dashboard/form.js";
+import idStorage from "./views/idStorage.js";
+
+const main = {
   rows: [
     {
       view: "toolbar",
@@ -14,7 +21,7 @@ webix.ui({
           icon: "wxi-user",
           autowidth: true,
           css: "webix_transparent",
-          popup: "my_popup",
+          popup: idStorage.popup,
         },
       ],
     },
@@ -25,18 +32,28 @@ webix.ui({
           rows: [
             {
               view: "list",
-              id: "mylist",
               width: 200,
               autoheight: true,
               scroll: false,
               border: false,
+              select: true,
+              on: {
+                onAfterSelect: function (id) {
+                  $$(id).show();
+                },
+              },
+
               css: "listBackgr",
-              data: ["Dashboard", "Users", "Products", "Location"],
+              data: [
+                idStorage.dashboard,
+                idStorage.users,
+                idStorage.products,
+                idStorage.admin,
+              ],
             },
             {},
             {
               view: "label",
-              id: "connect",
               label: "<i class='webix_icon wxi wxi-check'></i>Connected",
               align: "center",
               css: "greentext",
@@ -45,78 +62,12 @@ webix.ui({
         },
         { view: "resizer" },
         {
-          view: "datatable",
-          id: "film_list",
-          data: small_film_set,
-          autoConfig: true,
-        },
-        {
-          view: "form",
-          id: "film_form",
-          gravity: 0.3,
-          paddingX: 30,
-          elements: [
-            { template: "Edit Films", type: "section" },
-            {
-              view: "text",
-              name: "title",
-              id: "inp_title",
-              label: "Title",
-              invalidMessage: "Enter a tittle",
-            },
-            {
-              view: "text",
-              name: "year",
-              id: "inp_year",
-              label: "Year",
-              invalidMessage: "Enter a year between 1970 and 2022",
-            },
-            {
-              view: "text",
-              name: "rating",
-              id: "inp_rating",
-              label: "Rating",
-              invalidMessage: 'Enter a rating more than "0"',
-            },
-            {
-              view: "text",
-              name: "votes",
-              id: "inp_votes",
-              label: "Votes",
-              invalidMessage: "Enter votes less than 100000",
-            },
-            {
-              margin: 10,
-              cols: [
-                {
-                  view: "button",
-                  id: "addButton",
-                  value: "Add new",
-                  css: "webix_primary",
-                  click: addFilm,
-                },
-                {
-                  view: "button",
-                  id: "clrButton",
-                  value: "Clear",
-                  click: clearForm,
-                },
-              ],
-            },
-            {},
+          cells: [
+            { id: idStorage.dashboard, cols: [filmTable, filmForm] },
+            { id: idStorage.users, rows: [userSearch, userList, userChart] },
+            { id: idStorage.products, rows: [products] },
+            { id: idStorage.admin, template: "Admin" },
           ],
-          rules: {
-            title: webix.rules.isNotEmpty,
-            year: function (value) {
-              return value > 1970 && value <= new Date().getFullYear();
-            },
-            votes: function (value) {
-              return value < 100000;
-            },
-            rating: function (value) {
-              return webix.rules.isNotEmpty && value != 0;
-            },
-          },
         },
       ],
     },
@@ -128,37 +79,7 @@ webix.ui({
       css: "footer",
     },
   ],
-});
+};
 
-webix.ui({
-  view: "popup",
-  id: "my_popup",
-  body: {
-    view: "list",
-    autoheight: true,
-    scroll: false,
-    data: ["Settings", "Log Out"],
-  },
-});
-
-const form = $$("film_form");
-
-function addFilm() {
-  const film_item = form.getValues();
-  if (form.validate()) {
-    $$("film_list").add(film_item);
-    webix.message("The validation is successful");
-  }
-}
-
-function clearForm() {
-  webix
-    .confirm({
-      title: "Form will be cleared",
-      text: "Do you still want to continue?",
-    })
-    .then(function () {
-      form.clear();
-      form.clearValidation();
-    });
-}
+webix.ui(main);
+webix.ui(popup);
