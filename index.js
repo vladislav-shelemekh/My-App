@@ -1,7 +1,7 @@
 import popup from "./views/pop-up.js";
 import { userSearch, userList, userChart } from "./views/users/users.js";
 import products from "./views/products/products.js";
-import filmTable from "./views/dashboard/dataTable.js";
+import { filmTable, tabBar } from "./views/dashboard/dataTable.js";
 import filmForm from "./views/dashboard/form.js";
 import idStorage from "./views/idStorage.js";
 
@@ -25,6 +25,7 @@ const main = {
         },
       ],
     },
+
     {
       cols: [
         {
@@ -63,7 +64,10 @@ const main = {
         { view: "resizer" },
         {
           cells: [
-            { id: idStorage.dashboard, cols: [filmTable, filmForm] },
+            {
+              id: idStorage.dashboard,
+              cols: [{ rows: [tabBar, filmTable] }, filmForm],
+            },
             { id: idStorage.users, rows: [userSearch, userList, userChart] },
             { id: idStorage.products, rows: [products] },
             { id: idStorage.admin, template: "Admin" },
@@ -83,3 +87,35 @@ const main = {
 
 webix.ui(main);
 webix.ui(popup);
+
+$$(idStorage.filmForm).bind($$(idStorage.filmTable));
+
+$$(idStorage.userChart).sync($$(idStorage.userList), function () {
+  $$(idStorage.userChart).group({
+    by: "country",
+    map: {
+      age: ["age", "count"],
+    },
+  });
+});
+
+$$(idStorage.filmTable).registerFilter(
+  $$(idStorage.tabBar),
+  {
+    columnId: "year",
+    compare: function (value, filter, item) {
+      if (filter == 1) return value;
+      else if (filter == 2) return value < 1990;
+      else if (filter == 3) return value >= 1990 && value < 2007;
+      else if (filter == 4) return value >= 2007;
+    },
+  },
+  {
+    getValue: function (node) {
+      return node.getValue();
+    },
+    setValue: function (node, value) {
+      node.setValue(value);
+    },
+  }
+);

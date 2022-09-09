@@ -39,22 +39,7 @@ const filmForm = {
           value: "Save",
           css: "webix_primary",
           on: {
-            onItemClick: function () {
-              const films = $$(idStorage.filmTable);
-              const form = $$(idStorage.filmForm);
-              const filmItem = form.getValues();
-
-              if (form.validate()) {
-                if (filmItem.id) {
-                  films.updateItem(filmItem.id, filmItem);
-                } else {
-                  films.add(filmItem);
-                }
-
-                form.clear();
-                webix.message("The validation is successful");
-              }
-            },
+            onItemClick: saveItem,
           },
         },
         {
@@ -93,5 +78,16 @@ const filmForm = {
     },
   },
 };
+
+function saveItem() {
+  const form = $$(idStorage.filmForm);
+  if (form.isDirty()) {
+    if (!form.validate()) return false;
+    form.save();
+    form.clear();
+    $$(idStorage.filmTable).unselectAll();
+    webix.message("The validation is successful");
+  }
+}
 
 export default filmForm;

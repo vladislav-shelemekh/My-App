@@ -29,3 +29,7 @@
 .webix_list_item.select.webix_selected {
     background-color: lightblue;
 }
+
+.highlight {
+    background-color:yellow;
+}

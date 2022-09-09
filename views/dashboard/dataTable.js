@@ -1,5 +1,21 @@
 import idStorage from "../idStorage.js";
 
+const tabBar = {
+  view: "segmented",
+  id: idStorage.tabBar,
+  options: [
+    { id: 1, value: "All" },
+    { id: 2, value: "Old" },
+    { id: 3, value: "Modern" },
+    { id: 4, value: "New" },
+  ],
+  on: {
+    onChange: function () {
+      $$(idStorage.filmTable).filterByAll();
+    },
+  },
+};
+
 const filmTable = {
   view: "datatable",
   id: idStorage.filmTable,
@@ -15,8 +31,16 @@ const filmTable = {
       fillspace: true,
     },
     {
+      id: "categoryId",
+      collection: "./data/categories.js",
+      header: ["Category", { content: "selectFilter" }],
+      adjust: true,
+    },
+
+    {
       id: "year",
-      header: ["Released", { content: "textFilter" }],
+
+      header: "Released",
       adjust: true,
     },
     { id: "votes", header: ["Votes", { content: "textFilter" }], adjust: true },
@@ -28,12 +52,22 @@ const filmTable = {
       return false;
     },
   },
-  on: {
-    onAfterSelect: function (film) {
-      const values = this.getItem(film);
-      $$(idStorage.filmForm).setValues(values);
+  data: [
+    { id: "1", categoryId: 1 },
+    { id: "2", categoryId: 2 },
+    { id: "3", categoryId: 3 },
+    { id: "4", categoryId: 4 },
+  ],
+  scheme: {
+    $init: function (obj) {
+      const randomizer = function randomInteger(min, max) {
+        let rand = min - 0.5 + Math.random() * (max - min + 1);
+        return Math.round(rand);
+      };
+
+      obj.categoryId = randomizer(1, 4);
     },
   },
 };
 
-export default filmTable;
+export { filmTable, tabBar };
