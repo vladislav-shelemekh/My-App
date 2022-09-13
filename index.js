@@ -99,7 +99,6 @@ $$(idStorage.userList).sync(users, function() {
     return(obj);
   });
 
-  //if (this.age < 26) this.$css = "highlight";
 } );
 $$(idStorage.adminTable).sync(categories);
 

@@ -76,7 +76,7 @@ const userList = {
       this.remove(id);
       return false;
     },
-  }
+  },
 };
 
 const userChart = {
