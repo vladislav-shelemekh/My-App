@@ -94,7 +94,7 @@ $$(idStorage.filmForm).bind($$(idStorage.filmTable));
 
 $$(idStorage.userChart).sync(users);
 $$(idStorage.userList).sync(users, function() {
-  this.filter( function (obj) {
+  this.each( function (obj) {
     if (obj.age < 26) obj.$css = "highlight";
     return(obj);
   });
@@ -102,7 +102,7 @@ $$(idStorage.userList).sync(users, function() {
 } );
 $$(idStorage.adminTable).sync(categories);
 
-$$(idStorage.userChart).sync($$(idStorage.userList), function () {
+$$(idStorage.userChart).sync(users, function () {
   $$(idStorage.userChart).group({
     by: "country",
     map: {

@@ -1,6 +1,7 @@
 import idStorage from "../idStorage.js";
 import countries from "/data/countries.js";
 import randomizer from "../helpers.js";
+import {users} from "../collections.js";
 
 webix.protoUI(
   {
@@ -52,7 +53,7 @@ const userSearch = {
           const country = countries[random].value;
           const user = { name, age, country };
 
-          $$(idStorage.userList).add(user);
+          users.add(user);
         },
       },
     },
@@ -73,7 +74,7 @@ const userList = {
     "#name#, #age#, from #country# <i class='webix_icon wxi wxi-close close'></i>",
   onClick: {
     "wxi-close": function (e, id) {
-      this.remove(id);
+      users.remove(id);
       return false;
     },
   },
