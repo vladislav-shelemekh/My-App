@@ -70,7 +70,7 @@ const main = {
             },
             { id: idStorage.users, rows: [userSearch, userList, userChart] },
             { id: idStorage.products, rows: [products] },
-            { id: "Admin", template: "admin" },
+            { id: idStorage.admin, template: "Admin" },
           ],
         },
       ],
