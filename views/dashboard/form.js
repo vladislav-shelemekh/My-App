@@ -1,4 +1,5 @@
 import idStorage from "../idStorage.js";
+import { categories } from "../collections.js";
 
 const filmForm = {
   view: "form",
@@ -30,6 +31,11 @@ const filmForm = {
       name: "votes",
       label: "Votes",
       invalidMessage: "Enter votes less than 100000",
+    },
+    {
+      view:"richselect",
+      label:"Category", 
+      options:categories
     },
     {
       margin: 10,

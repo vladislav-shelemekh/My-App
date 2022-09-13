@@ -1,5 +1,6 @@
 import idStorage from "../idStorage.js";
 import randomizer from "../helpers.js";
+import { categories } from "../collections.js";
 
 const tabBar = {
   view: "segmented",
@@ -33,7 +34,7 @@ const filmTable = {
     },
     {
       id: "categoryId",
-      collection: "./data/categories.js",
+      collection: categories,
       header: ["Category", { content: "selectFilter" }],
       adjust: true,
     },

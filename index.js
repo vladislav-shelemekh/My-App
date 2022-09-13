@@ -4,6 +4,8 @@ import products from "./views/products/products.js";
 import { filmTable, tabBar } from "./views/dashboard/dataTable.js";
 import filmForm from "./views/dashboard/form.js";
 import idStorage from "./views/idStorage.js";
+import { categoriesTable, categoriesForm } from "./views/admin/admin.js";
+import { categories, users } from "./views/collections.js";
 
 const main = {
   rows: [
@@ -70,7 +72,7 @@ const main = {
             },
             { id: idStorage.users, rows: [userSearch, userList, userChart] },
             { id: idStorage.products, rows: [products] },
-            { id: "Admin", template: "admin" },
+            { id: idStorage.admin, cols: [categoriesTable, categoriesForm] },
           ],
         },
       ],
@@ -89,6 +91,8 @@ webix.ui(main);
 webix.ui(popup);
 
 $$(idStorage.filmForm).bind($$(idStorage.filmTable));
+$$(idStorage.userList).sync(users);
+$$(idStorage.adminTable).sync(categories);
 
 $$(idStorage.userChart).sync($$(idStorage.userList), function () {
   $$(idStorage.userChart).group({

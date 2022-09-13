@@ -62,7 +62,6 @@ const userSearch = {
 const userList = {
   view: "editlist",
   id: idStorage.userList,
-  url: "./data/users.js",
   select: true,
   editable: true,
   editor: "text",
