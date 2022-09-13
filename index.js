@@ -92,11 +92,9 @@ webix.ui(popup);
 
 $$(idStorage.filmForm).bind($$(idStorage.filmTable));
 
-$$(idStorage.userChart).sync(users);
 $$(idStorage.userList).sync(users, function() {
   this.each( function (obj) {
     if (obj.age < 26) obj.$css = "highlight";
-    return(obj);
   });
 
 } );
