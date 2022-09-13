@@ -1,4 +1,14 @@
 import idStorage from "../idStorage.js";
+import countries from "/data/countries.js";
+import randomizer from "../helpers.js";
+
+webix.protoUI(
+  {
+    name: "editlist",
+  },
+  webix.EditAbility,
+  webix.ui.list
+);
 
 const userSearch = {
   view: "toolbar",
@@ -20,49 +30,77 @@ const userSearch = {
       value: "Sort asc",
       css: "webix_primary",
       autowidth: true,
-      click: ascSort,
+      click: sortAsc,
     },
     {
       view: "button",
       value: "Sort desc",
       autowidth: true,
       css: "webix_primary",
-      click: descSort,
+      click: sortDesc,
+    },
+    {
+      view: "button",
+      value: "Add new",
+      autowidth: true,
+      css: "webix_primary",
+      on: {
+        onItemClick: function () {
+          const name = "Геннадий";
+          const age = randomizer(1, 50);
+          const random = randomizer(0, 8);
+          const country = countries[random].value;
+          const user = { name, age, country };
+
+          $$(idStorage.userList).add(user);
+        },
+      },
     },
   ],
 };
 
 const userList = {
-  view: "list",
+  view: "editlist",
   id: idStorage.userList,
   url: "./data/users.js",
   select: true,
+  editable: true,
+  editor: "text",
+  editValue: "name",
+  rules: {
+    name: webix.rules.isNotEmpty,
+  },
   template:
-    "#name# from #country# <i class='webix_icon wxi wxi-close close'></i>",
+    "#name#, #age#, from #country# <i class='webix_icon wxi wxi-close close'></i>",
   onClick: {
     "wxi-close": function (e, id) {
       this.remove(id);
       return false;
     },
   },
-  on: {
-    onAfterLoad: highlter,
+  scheme: {
+    $init: function (obj) {
+      if (obj.age < 26) obj.$css = "highlight";
+    },
+    $change: function (obj) {
+      if (obj.age < 26) obj.$css = "highlight";
+    },
   },
 };
 
 const userChart = {
   view: "chart",
   type: "bar",
+  id: idStorage.userChart,
   value: "#age#",
   barWidth: 35,
   radius: 0,
   gradient: "falling",
-  url: "./data/users.js",
-  xAxis: "#age#",
+  xAxis: "#country#",
   yAxis: {
     start: 0,
-    step: 10,
-    end: 70,
+    step: 2,
+    end: 16,
   },
 };
 
@@ -72,14 +110,6 @@ function sortAsc() {
 
 function sortDesc() {
   $$(idStorage.userList).sort("#name#", "desc", "string");
-}
-
-function highlitItem() {
-  $$(idStorage.userList).data.each(function (item) {
-    if (item.id < 6) {
-      $$(idStorage.userList).addCss(item.id, "back select");
-    }
-  });
 }
 
 export { userSearch, userList, userChart };
