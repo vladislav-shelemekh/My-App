@@ -91,7 +91,16 @@ webix.ui(main);
 webix.ui(popup);
 
 $$(idStorage.filmForm).bind($$(idStorage.filmTable));
-$$(idStorage.userList).sync(users);
+
+$$(idStorage.userChart).sync(users);
+$$(idStorage.userList).sync(users, function() {
+  this.filter( function (obj) {
+    if (obj.age < 26) obj.$css = "highlight";
+    return(obj);
+  });
+
+  //if (this.age < 26) this.$css = "highlight";
+} );
 $$(idStorage.adminTable).sync(categories);
 
 $$(idStorage.userChart).sync($$(idStorage.userList), function () {

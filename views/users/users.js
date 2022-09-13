@@ -76,15 +76,7 @@ const userList = {
       this.remove(id);
       return false;
     },
-  },
-  scheme: {
-    $init: function (obj) {
-      if (obj.age < 26) obj.$css = "highlight";
-    },
-    $change: function (obj) {
-      if (obj.age < 26) obj.$css = "highlight";
-    },
-  },
+  }
 };
 
 const userChart = {
