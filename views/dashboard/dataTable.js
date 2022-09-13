@@ -1,4 +1,5 @@
 import idStorage from "../idStorage.js";
+import randomizer from "../helpers.js";
 
 const tabBar = {
   view: "segmented",
@@ -60,11 +61,6 @@ const filmTable = {
   ],
   scheme: {
     $init: function (obj) {
-      const randomizer = function randomInteger(min, max) {
-        let rand = min - 0.5 + Math.random() * (max - min + 1);
-        return Math.round(rand);
-      };
-
       obj.categoryId = randomizer(1, 4);
     },
   },

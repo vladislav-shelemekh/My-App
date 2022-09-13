@@ -11,7 +11,10 @@ const idStorage = {
   products: "Products",
   admin: "Admin",
   tabBar: "mytab",
-  f15: "r4"
+  f15: "r4",
+  adminTable: "admin_table",
+  adminForm: "admin_form"
+
 };
 
 export default idStorage;

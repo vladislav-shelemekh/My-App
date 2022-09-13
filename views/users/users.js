@@ -1,4 +1,6 @@
 import idStorage from "../idStorage.js";
+import countries from "/data/countries.js";
+import randomizer from "../helpers.js";
 
 webix.protoUI(
   {
@@ -44,13 +46,11 @@ const userSearch = {
       css: "webix_primary",
       on: {
         onItemClick: function () {
-          const randomizer = function randomInteger(min, max) {
-            let rand = min - 0.5 + Math.random() * (max - min + 1);
-            return Math.round(rand);
-          };
-
-          const random = randomizer(0, 5);
-          const user = data[random];
+          const name = "Геннадий";
+          const age = randomizer(1, 50);
+          const random = randomizer(0, 8);
+          const country = countries[random].value;
+          const user = { name, age, country };
 
           $$(idStorage.userList).add(user);
         },
@@ -111,13 +111,5 @@ function sortAsc() {
 function sortDesc() {
   $$(idStorage.userList).sort("#name#", "desc", "string");
 }
-
-const data = [
-  { id: 20, name: "Геннадий", age: 30, country: "Germany" },
-  { id: 21, name: "Геннадий", age: 22, country: "Canada" },
-  { id: 22, name: "Геннадий", age: 27, country: "Italy" },
-  { id: 23, name: "Геннадий", age: 40, country: "Spain" },
-  { id: 24, name: "Геннадий", age: 28, country: "Germany" },
-];
 
 export { userSearch, userList, userChart };

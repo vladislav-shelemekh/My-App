@@ -5,6 +5,8 @@ import { filmTable, tabBar } from "./views/dashboard/dataTable.js";
 import filmForm from "./views/dashboard/form.js";
 import idStorage from "./views/idStorage.js";
 
+
+
 const main = {
   rows: [
     {
@@ -70,7 +72,7 @@ const main = {
             },
             { id: idStorage.users, rows: [userSearch, userList, userChart] },
             { id: idStorage.products, rows: [products] },
-            { id: idStorage.admin, template: "Admin" },
+            { id: "Admin", template:"admin" },
           ],
         },
       ],
@@ -87,6 +89,7 @@ const main = {
 
 webix.ui(main);
 webix.ui(popup);
+
 
 $$(idStorage.filmForm).bind($$(idStorage.filmTable));
 
